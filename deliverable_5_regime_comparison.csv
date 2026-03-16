@@ -1,0 +1,5 @@
+Model,AUC-ROC,Precision,Recall,F1 Score,Brier,Log Loss,n_train,n_test
+Clear Conditions,0.4683,0.3333,0.2222,0.2667,0.2453,0.8469,139,37
+Non-Holiday,0.4866,0.25,0.1111,0.1538,0.2211,0.6774,157,38
+Night-time,0.4375,0.25,0.5,0.3333,0.2828,0.8553,40,10
+Daytime,0.4845,0.3333,0.2857,0.3077,0.2525,0.8127,120,30
