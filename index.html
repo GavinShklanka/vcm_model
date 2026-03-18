@@ -426,11 +426,24 @@
     <div class="kpi-row">
         <details class="kpi-card">
             <summary>
-                <div class="kpi-title">Best Overall AUC-ROC</div>
+                <div class="kpi-title">Best AUC-ROC</div>
                 <div class="kpi-value">0.642</div>
             </summary>
             <div class="kpi-details">
-                <p><strong>Meaning:</strong> XGBoost ranked severities cleanly better than chance, but the moderate ceiling reflects overlapping real-world collision behaviors.</p>
+                <p><strong>Technical:</strong> This is the strongest ranking performance across the three candidate models.</p>
+                <p><strong>Plain language:</strong> The model is reasonably good at sorting higher-risk cases above lower-risk ones, even if it is not a strong yes/no classifier.</p>
+                <p><strong>NS relevance:</strong> This supports corridor prioritization and monitoring rather than deterministic crash prediction.</p>
+            </div>
+        </details>
+        <details class="kpi-card">
+            <summary>
+                <div class="kpi-title">Severe Rate in Dataset</div>
+                <div class="kpi-value">21.8%</div>
+            </summary>
+            <div class="kpi-details">
+                <p><strong>Technical:</strong> Severe collisions are the minority class in the modeled subset.</p>
+                <p><strong>Plain language:</strong> Serious collisions matter a lot, but they are still a smaller share of all cases, which makes the prediction problem harder.</p>
+                <p><strong>NS relevance:</strong> This explains why the project is evaluated with ROC/AUC and why threshold metrics should be interpreted cautiously.</p>
             </div>
         </details>
         <details class="kpi-card">
@@ -439,7 +452,9 @@
                 <div class="kpi-value">XGBoost</div>
             </summary>
             <div class="kpi-details">
-                <p><strong>Meaning:</strong> Gradient boosting captured complex interactions between traffic and weather better than logistic regression.</p>
+                <p><strong>Technical:</strong> XGBoost produced the best held-out discrimination among the candidate models.</p>
+                <p><strong>Plain language:</strong> Out of the tested models, this one handled the problem best.</p>
+                <p><strong>NS relevance:</strong> This suggests that severity risk depends on nonlinear combinations of weather, exposure, and collision context.</p>
             </div>
         </details>
         <details class="kpi-card">
@@ -448,25 +463,20 @@
                 <div class="kpi-value">temp_c</div>
             </summary>
             <div class="kpi-details">
-                <p><strong>SHAP Impact:</strong> High SHAP values indicate temperature acts as a proxy driver for broader seasonal and road-surface hazards pushing severity.</p>
+                <p><strong>Technical:</strong> Temperature emerged as one of the strongest global predictors in the final model.</p>
+                <p><strong>Plain language:</strong> Temperature seems to matter because it reflects broader operating conditions, not just one isolated factor.</p>
+                <p><strong>NS relevance:</strong> This likely connects to seasonal transitions, freeze-thaw conditions, and changing corridor environments.</p>
             </div>
         </details>
         <details class="kpi-card">
             <summary>
-                <div class="kpi-title">Best Recall</div>
-                <div class="kpi-value">33.3%</div>
+                <div class="kpi-title">Corridor Type Share</div>
+                <div class="kpi-value">53.6% Hwy</div>
             </summary>
             <div class="kpi-details">
-                <p><strong>Meaning:</strong> The highest rate of true severe collisions the model was able to catch out of the total 450 actual severe cases.</p>
-            </div>
-        </details>
-        <details class="kpi-card">
-            <summary>
-                <div class="kpi-title">Best Precision</div>
-                <div class="kpi-value">12.5%</div>
-            </summary>
-            <div class="kpi-details">
-                <p><strong>Meaning:</strong> The trustworthiness rate when the model specifically flags a severe collision risk.</p>
+                <p><strong>Technical:</strong> More than half of the modeled collisions occurred in highway-class settings.</p>
+                <p><strong>Plain language:</strong> This dataset is heavily focused on highway corridor driving, not just local streets.</p>
+                <p><strong>NS relevance:</strong> That strengthens the provincial corridor framing and the policy relevance of the results.</p>
             </div>
         </details>
     </div>
