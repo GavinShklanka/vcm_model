@@ -934,19 +934,50 @@
 
     let gridLayer, pointsLayer;
 
-    function showInfoPanel(p) {
+    function showGridInfo(p) {
         const panel = document.getElementById('map-info-panel');
         panel.style.display = 'block';
         const tier = p.hotspot_tier || 'No Data';
         const tierClass = 'tier-' + tier.replace(/\s/g,'');
         document.getElementById('info-tier-badge').innerHTML = '<span class="tier-badge ' + tierClass + '">' + tier + '</span>';
-        document.getElementById('info-collisions').textContent = p.collisions;
-        document.getElementById('info-severe').textContent = Math.round(p.severe_collisions);
-        document.getElementById('info-rate').textContent = (p.severe_rate * 100).toFixed(1) + '%';
-        document.getElementById('info-hwy').textContent = (p.highway_share * 100).toFixed(1) + '%';
-        document.getElementById('info-ramp').textContent = (p.ramp_share * 100).toFixed(1) + '%';
-        document.getElementById('info-route').textContent = p.top_route === 'Unknown' ? '—' : 'Route ' + p.top_route;
+        document.querySelector('#map-info-panel h4').childNodes[0].nodeValue = 'Cell Details ';
+        
+        const gridHTML = `
+            <div class="info-item"><div class="info-label">Total Collisions</div><div class="info-val">${p.collisions}</div></div>
+            <div class="info-item"><div class="info-label">Severe Collisions</div><div class="info-val">${Math.round(p.severe_collisions)}</div></div>
+            <div class="info-item"><div class="info-label">Severe Rate</div><div class="info-val">${(p.severe_rate * 100).toFixed(1)}%</div></div>
+            <div class="info-item"><div class="info-label">Highway Share</div><div class="info-val">${(p.highway_share * 100).toFixed(1)}%</div></div>
+            <div class="info-item"><div class="info-label">Ramp Share</div><div class="info-val">${(p.ramp_share * 100).toFixed(1)}%</div></div>
+            <div class="info-item"><div class="info-label">Dominant Route</div><div class="info-val">${p.top_route === 'Unknown' ? '—' : 'Route ' + p.top_route}</div></div>
+        `;
+        document.querySelector('.info-grid').innerHTML = gridHTML;
         panel.style.borderLeftColor = tierColors[tier] || '#94a3b8';
+    }
+
+    function showPointInfo(p) {
+        const panel = document.getElementById('map-info-panel');
+        panel.style.display = 'block';
+        const isSevere = p.severe === 1.0 || p.severe_label === 'Severe';
+        const tierClass = isSevere ? 'tier-Critical' : 'tier-Baseline';
+        document.getElementById('info-tier-badge').innerHTML = '<span class="tier-badge ' + tierClass + '">' + (isSevere ? 'Severe' : 'Non-Severe') + '</span>';
+        document.querySelector('#map-info-panel h4').childNodes[0].nodeValue = 'Collision Details ';
+        
+        // Format time of day
+        let timeStr = p.datetime_raw || 'Unknown';
+        if (timeStr.includes(' ')) {
+            timeStr = timeStr.split(' ')[1] + ' ' + (timeStr.split(' ')[2] || '');
+        }
+
+        const gridHTML = `
+            <div class="info-item"><div class="info-label">Time of Day</div><div class="info-val">${timeStr}</div></div>
+            <div class="info-item"><div class="info-label">Route</div><div class="info-val">${p.nsrn_street || 'Unknown'}</div></div>
+            <div class="info-item"><div class="info-label">Road Class</div><div class="info-val">${p.nsrn_roadc_desc || 'Unknown'}</div></div>
+            <div class="info-item"><div class="info-label">Vehicles Involved</div><div class="info-val">${p.n_vehicles || 'Unknown'}</div></div>
+            <div class="info-item"><div class="info-label">Weather</div><div class="info-val">${p.weather_condition || 'Unknown'}</div></div>
+            <div class="info-item"><div class="info-label">Light Condition</div><div class="info-val">${p.light_condition || 'Unknown'}</div></div>
+        `;
+        document.querySelector('.info-grid').innerHTML = gridHTML;
+        panel.style.borderLeftColor = isSevere ? tierColors['Critical'] : tierColors['Baseline'];
     }
 
     function showLayer(which) {
@@ -970,7 +1001,7 @@
                 };
             },
             onEachFeature: function(f, layer) {
-                layer.on('click', function() { showInfoPanel(f.properties); });
+                layer.on('click', function(e) { L.DomEvent.stopPropagation(e); showGridInfo(f.properties); });
                 layer.on('mouseover', function() { layer.setStyle({ weight: 3, fillOpacity: 0.8 }); });
                 layer.on('mouseout', function() { gridLayer.resetStyle(layer); });
             }
@@ -982,11 +1013,19 @@
     fetch('data/ns_collision_points.geojson').then(r => r.json()).then(data => {
         pointsLayer = L.geoJSON(data, {
             pointToLayer: function(f, ll) {
-                const isSevere = f.properties.severity === 'Severe' || f.properties.is_severe === 1;
+                const isSevere = f.properties.severe === 1.0 || f.properties.severe_label === 'Severe';
                 return L.circleMarker(ll, {
-                    radius: 4, fillColor: isSevere ? '#dc2626' : '#3b82f6',
-                    color: '#1e293b', weight: 0.5, fillOpacity: 0.7
+                    radius: 5, fillColor: isSevere ? '#dc2626' : '#3b82f6',
+                    color: '#ffffff', weight: 1, fillOpacity: 0.85
                 });
+            },
+            onEachFeature: function(f, layer) {
+                layer.on('click', function(e) { 
+                    L.DomEvent.stopPropagation(e);
+                    showPointInfo(f.properties); 
+                });
+                layer.on('mouseover', function() { layer.setStyle({ radius: 8, weight: 2 }); });
+                layer.on('mouseout', function() { layer.setStyle({ radius: 5, weight: 1 }); });
             }
         });
     }).catch(e => console.warn('Points GeoJSON not loaded:', e));
