@@ -1,0 +1,738 @@
+{
+  "overview": {
+    "total_collisions": 2068,
+    "severe_collisions": 450,
+    "severe_rate": 0.2176,
+    "date_range": "2024-01-03 to 2026-01-31",
+    "unique_locations": 734,
+    "total_features": 79,
+    "routes_covered": 24
+  },
+  "archetypes": [
+    {
+      "id": "distracted_commuter",
+      "name": "The Distracted Commuter",
+      "icon": "\ud83d\udcf1",
+      "count": 160,
+      "pct": 7.7,
+      "severe_rate": 0.331,
+      "color": "#F59E0B",
+      "description": "Daytime highway drivers flagged for distraction \u2014 highest distraction rate in the dataset at 100%. Predominantly rear-end collisions during work hours.",
+      "stats": {
+        "distracted": "100%",
+        "aggressive": "57.5%",
+        "highway": "44%",
+        "rush_hour": "High",
+        "young": "31%"
+      }
+    },
+    {
+      "id": "aggressive_tailgater",
+      "name": "The Aggressive Tailgater",
+      "icon": "\ud83c\udfce\ufe0f",
+      "count": 393,
+      "pct": 19.0,
+      "severe_rate": 0.257,
+      "color": "#EF4444",
+      "description": "Aggressive driving flagged in 100% of cases. Dominated by rear-end and sideswipe collisions on highways during business hours \u2014 the follow-too-close pattern.",
+      "stats": {
+        "aggressive": "100%",
+        "rear_end": "Dominant",
+        "highway": "52%",
+        "weekday": "86%",
+        "young": "38%"
+      }
+    },
+    {
+      "id": "wildlife_encounter",
+      "name": "The Wildlife Encounter",
+      "icon": "\ud83e\udd8c",
+      "count": 197,
+      "pct": 9.5,
+      "severe_rate": 0.107,
+      "color": "#10B981",
+      "description": "Animal-involved collisions peaking at dusk and dawn. Lowest severity rate but highest volume in November and May-June \u2014 matching migration and mating seasons.",
+      "stats": {
+        "animal": "100%",
+        "dark_dusk": "60%",
+        "single_vehicle": "92%",
+        "peak_months": "Nov, May-Jun",
+        "highway": "56%"
+      }
+    },
+    {
+      "id": "winter_warrior",
+      "name": "The Winter Road Warrior",
+      "icon": "\u2744\ufe0f",
+      "count": 334,
+      "pct": 16.2,
+      "severe_rate": 0.18,
+      "color": "#3B82F6",
+      "description": "Winter driving on icy/snowy surfaces with adverse weather. Single-vehicle off-road departures dominate, especially on curved and graded terrain.",
+      "stats": {
+        "winter_surface": "94%",
+        "adverse_weather": "72%",
+        "curves": "40%",
+        "single_vehicle": "77%",
+        "off_road": "Dominant"
+      }
+    },
+    {
+      "id": "night_risk_taker",
+      "name": "The Late Night Risk Taker",
+      "icon": "\ud83c\udf19",
+      "count": 140,
+      "pct": 6.8,
+      "severe_rate": 0.321,
+      "color": "#8B5CF6",
+      "description": "Late-night and dark conditions with 32% impairment rate \u2014 10x the dataset average. Young drivers overrepresented. Weekend-heavy with single-vehicle off-road crashes.",
+      "stats": {
+        "impaired": "32%",
+        "late_night": "80%",
+        "dark": "89%",
+        "young": "42%",
+        "weekend": "33%"
+      }
+    },
+    {
+      "id": "everyday_commuter",
+      "name": "The Everyday Commuter",
+      "icon": "\ud83d\ude97",
+      "count": 844,
+      "pct": 40.8,
+      "severe_rate": 0.201,
+      "color": "#6B7280",
+      "description": "The baseline. Multi-vehicle collisions under normal conditions \u2014 rear-end and sideswipe dominate. No single behavioral flag stands out. The background risk of Nova Scotian roads.",
+      "stats": {
+        "multi_vehicle": "Dominant",
+        "rear_end": "34%",
+        "weekday": "81%",
+        "normal_conditions": "Typical",
+        "highway": "52%"
+      }
+    }
+  ],
+  "terrain": {
+    "alignment": [
+      {
+        "label": "Curved",
+        "total": 544,
+        "severe": 143,
+        "rate": 0.263
+      },
+      {
+        "label": "Straight",
+        "total": 1510,
+        "severe": 304,
+        "rate": 0.201
+      }
+    ],
+    "grade": [
+      {
+        "label": "Level",
+        "total": 1441,
+        "severe": 310,
+        "rate": 0.215
+      },
+      {
+        "label": "Slope",
+        "total": 501,
+        "severe": 114,
+        "rate": 0.228
+      },
+      {
+        "label": "Top of Hill",
+        "total": 59,
+        "severe": 11,
+        "rate": 0.186
+      },
+      {
+        "label": "Bottom of Hill",
+        "total": 42,
+        "severe": 10,
+        "rate": 0.238
+      }
+    ],
+    "combined": [
+      {
+        "label": "Curved + Graded",
+        "total": 256,
+        "severe": 64,
+        "rate": 0.25
+      },
+      {
+        "label": "Curved + Level",
+        "total": 281,
+        "severe": 79,
+        "rate": 0.281
+      },
+      {
+        "label": "Straight + Graded",
+        "total": 346,
+        "severe": 71,
+        "rate": 0.205
+      },
+      {
+        "label": "Flat + Straight",
+        "total": 1185,
+        "severe": 236,
+        "rate": 0.199
+      }
+    ],
+    "single_vehicle_curves": {
+      "curved_severe_rate": 0.299,
+      "straight_severe_rate": 0.225
+    },
+    "insight": "Curved roads show 30% higher severity than straight roads. Single-vehicle crashes on curves have a 29.9% severe rate \u2014 the highest terrain-specific risk factor."
+  },
+  "wildlife": {
+    "total": 200,
+    "pct_of_all": 9.7,
+    "severe_rate": 0.11,
+    "vs_non_animal_rate": 0.229,
+    "peak_hours": [
+      {
+        "hour": 21,
+        "count": 21
+      },
+      {
+        "hour": 20,
+        "count": 17
+      },
+      {
+        "hour": 22,
+        "count": 16
+      },
+      {
+        "hour": 17,
+        "count": 13
+      }
+    ],
+    "peak_months": [
+      {
+        "month": "Nov",
+        "count": 38
+      },
+      {
+        "month": "May",
+        "count": 24
+      },
+      {
+        "month": "Jun",
+        "count": 26
+      },
+      {
+        "month": "Oct",
+        "count": 26
+      }
+    ],
+    "light_split": {
+      "Darkness": 101,
+      "Daylight": 82,
+      "Dusk": 14,
+      "Dawn": 3
+    },
+    "insight": "Animal collisions spike November (38) and May-June (50) \u2014 aligning with deer rut and spring activity. 51% occur in darkness. Highway segments account for 56% of wildlife strikes."
+  },
+  "visibility": {
+    "light_severity": [
+      {
+        "condition": "Dusk",
+        "rate": 0.275,
+        "total": 102
+      },
+      {
+        "condition": "Daylight",
+        "rate": 0.219,
+        "total": 1343
+      },
+      {
+        "condition": "Darkness",
+        "rate": 0.212,
+        "total": 533
+      },
+      {
+        "condition": "Dawn",
+        "rate": 0.183,
+        "total": 71
+      }
+    ],
+    "weather_severity": [
+      {
+        "condition": "Overcast",
+        "rate": 0.241,
+        "total": 311
+      },
+      {
+        "condition": "Rain",
+        "rate": 0.227,
+        "total": 198
+      },
+      {
+        "condition": "Clear",
+        "rate": 0.225,
+        "total": 1244
+      },
+      {
+        "condition": "Fog/Mist",
+        "rate": 0.194,
+        "total": 31
+      },
+      {
+        "condition": "Freezing Rain",
+        "rate": 0.17,
+        "total": 47
+      },
+      {
+        "condition": "Snow",
+        "rate": 0.168,
+        "total": 191
+      }
+    ],
+    "insight": "Dusk shows the highest severity rate (27.5%) \u2014 the transition window when visibility degrades fastest. Counter-intuitively, snow/ice have LOWER severity rates, likely because drivers slow down in obvious winter conditions."
+  },
+  "seasonality": {
+    "monthly": [
+      {
+        "month": "Jan",
+        "total": 289,
+        "severe": 63,
+        "rate": 0.218
+      },
+      {
+        "month": "Feb",
+        "total": 170,
+        "severe": 29,
+        "rate": 0.171
+      },
+      {
+        "month": "Mar",
+        "total": 116,
+        "severe": 20,
+        "rate": 0.172
+      },
+      {
+        "month": "Apr",
+        "total": 160,
+        "severe": 35,
+        "rate": 0.219
+      },
+      {
+        "month": "May",
+        "total": 155,
+        "severe": 44,
+        "rate": 0.284
+      },
+      {
+        "month": "Jun",
+        "total": 151,
+        "severe": 40,
+        "rate": 0.265
+      },
+      {
+        "month": "Jul",
+        "total": 154,
+        "severe": 39,
+        "rate": 0.253
+      },
+      {
+        "month": "Aug",
+        "total": 130,
+        "severe": 31,
+        "rate": 0.238
+      },
+      {
+        "month": "Sep",
+        "total": 147,
+        "severe": 43,
+        "rate": 0.293
+      },
+      {
+        "month": "Oct",
+        "total": 191,
+        "severe": 44,
+        "rate": 0.23
+      },
+      {
+        "month": "Nov",
+        "total": 195,
+        "severe": 28,
+        "rate": 0.144
+      },
+      {
+        "month": "Dec",
+        "total": 210,
+        "severe": 34,
+        "rate": 0.162
+      }
+    ],
+    "hourly": [
+      {
+        "hour": 0,
+        "total": 29,
+        "severe": 11,
+        "rate": 0.379
+      },
+      {
+        "hour": 1,
+        "total": 27,
+        "severe": 8,
+        "rate": 0.296
+      },
+      {
+        "hour": 2,
+        "total": 19,
+        "severe": 3,
+        "rate": 0.158
+      },
+      {
+        "hour": 3,
+        "total": 7,
+        "severe": 2,
+        "rate": 0.286
+      },
+      {
+        "hour": 4,
+        "total": 31,
+        "severe": 7,
+        "rate": 0.226
+      },
+      {
+        "hour": 5,
+        "total": 29,
+        "severe": 5,
+        "rate": 0.172
+      },
+      {
+        "hour": 6,
+        "total": 98,
+        "severe": 21,
+        "rate": 0.214
+      },
+      {
+        "hour": 7,
+        "total": 136,
+        "severe": 29,
+        "rate": 0.213
+      },
+      {
+        "hour": 8,
+        "total": 146,
+        "severe": 24,
+        "rate": 0.164
+      },
+      {
+        "hour": 9,
+        "total": 113,
+        "severe": 27,
+        "rate": 0.239
+      },
+      {
+        "hour": 10,
+        "total": 82,
+        "severe": 25,
+        "rate": 0.305
+      },
+      {
+        "hour": 11,
+        "total": 87,
+        "severe": 23,
+        "rate": 0.264
+      },
+      {
+        "hour": 12,
+        "total": 112,
+        "severe": 24,
+        "rate": 0.214
+      },
+      {
+        "hour": 13,
+        "total": 101,
+        "severe": 23,
+        "rate": 0.228
+      },
+      {
+        "hour": 14,
+        "total": 121,
+        "severe": 23,
+        "rate": 0.19
+      },
+      {
+        "hour": 15,
+        "total": 138,
+        "severe": 21,
+        "rate": 0.152
+      },
+      {
+        "hour": 16,
+        "total": 172,
+        "severe": 40,
+        "rate": 0.233
+      },
+      {
+        "hour": 17,
+        "total": 171,
+        "severe": 41,
+        "rate": 0.24
+      },
+      {
+        "hour": 18,
+        "total": 125,
+        "severe": 24,
+        "rate": 0.192
+      },
+      {
+        "hour": 19,
+        "total": 71,
+        "severe": 20,
+        "rate": 0.282
+      },
+      {
+        "hour": 20,
+        "total": 72,
+        "severe": 9,
+        "rate": 0.125
+      },
+      {
+        "hour": 21,
+        "total": 80,
+        "severe": 20,
+        "rate": 0.25
+      },
+      {
+        "hour": 22,
+        "total": 65,
+        "severe": 11,
+        "rate": 0.169
+      },
+      {
+        "hour": 23,
+        "total": 36,
+        "severe": 9,
+        "rate": 0.25
+      }
+    ],
+    "dst": {
+      "spring_window": {
+        "collisions": 51,
+        "severe_rate": 0.098
+      },
+      "fall_window": {
+        "collisions": 92,
+        "severe_rate": 0.174
+      },
+      "baseline": {
+        "collisions": 1925,
+        "severe_rate": 0.223
+      },
+      "insight": "Both DST transition windows show LOWER severity rates than baseline \u2014 but this may reflect lower volumes or increased caution. The fall-back window (Nov) sees 80% more collisions than spring-forward."
+    },
+    "insight": "September has the highest severity rate (29.3%) despite moderate volume. May-Sep is the danger corridor. Winter months (Nov-Mar) have HIGH volume but LOWER severity \u2014 suggesting defensive driving in obvious winter conditions."
+  },
+  "collision_types": {
+    "highest_severity": [
+      {
+        "type": "Rollover",
+        "rate": 0.585,
+        "count": 41
+      },
+      {
+        "type": "Right Angle",
+        "rate": 0.474,
+        "count": 19
+      },
+      {
+        "type": "Head On",
+        "rate": 0.467,
+        "count": 30
+      },
+      {
+        "type": "Off Road Right",
+        "rate": 0.31,
+        "count": 323
+      },
+      {
+        "type": "Off Road Left",
+        "rate": 0.265,
+        "count": 204
+      }
+    ],
+    "most_common": [
+      {
+        "type": "Rear End",
+        "count": 550,
+        "rate": 0.2
+      },
+      {
+        "type": "Off Road Right",
+        "count": 323,
+        "rate": 0.31
+      },
+      {
+        "type": "Object on Road",
+        "count": 268,
+        "rate": 0.134
+      },
+      {
+        "type": "Sideswipe",
+        "count": 244,
+        "rate": 0.094
+      },
+      {
+        "type": "Off Road Left",
+        "count": 204,
+        "rate": 0.265
+      }
+    ]
+  },
+  "routes": {
+    "highest_severity": [
+      {
+        "route": 333,
+        "total": 113,
+        "severe_rate": 0.372,
+        "label": "Hwy 333"
+      },
+      {
+        "route": 2,
+        "total": 30,
+        "severe_rate": 0.367,
+        "label": "Hwy 2"
+      },
+      {
+        "route": 224,
+        "total": 24,
+        "severe_rate": 0.333,
+        "label": "Hwy 224"
+      },
+      {
+        "route": 7,
+        "total": 135,
+        "severe_rate": 0.267,
+        "label": "Hwy 7"
+      },
+      {
+        "route": 107,
+        "total": 95,
+        "severe_rate": 0.263,
+        "label": "Hwy 107"
+      }
+    ],
+    "highest_volume": [
+      {
+        "route": 102,
+        "total": 557,
+        "severe_rate": 0.214,
+        "label": "Hwy 102"
+      },
+      {
+        "route": 103,
+        "total": 145,
+        "severe_rate": 0.221,
+        "label": "Hwy 103"
+      },
+      {
+        "route": 7,
+        "total": 135,
+        "severe_rate": 0.267,
+        "label": "Hwy 7"
+      },
+      {
+        "route": 333,
+        "total": 113,
+        "severe_rate": 0.372,
+        "label": "Hwy 333"
+      },
+      {
+        "route": 101,
+        "total": 110,
+        "severe_rate": 0.164,
+        "label": "Hwy 101"
+      }
+    ]
+  },
+  "model": {
+    "xgboost_auc": 0.642,
+    "logistic_auc": 0.604,
+    "random_forest_auc": 0.574,
+    "top_predictors": [
+      "temp_c",
+      "wind_kph",
+      "n_vehicles",
+      "traffic_x_visibility",
+      "traffic_x_precip",
+      "AADT",
+      "truck_share"
+    ],
+    "interpretation": "XGBoost captures nonlinear interactions between weather, traffic, and terrain that linear models miss. The model is best understood as a risk prioritization tool."
+  },
+  "day_of_week": [
+    {
+      "day": "Monday",
+      "total": 254,
+      "rate": 0.24
+    },
+    {
+      "day": "Tuesday",
+      "total": 375,
+      "rate": 0.165
+    },
+    {
+      "day": "Wednesday",
+      "total": 334,
+      "rate": 0.186
+    },
+    {
+      "day": "Thursday",
+      "total": 356,
+      "rate": 0.239
+    },
+    {
+      "day": "Friday",
+      "total": 305,
+      "rate": 0.256
+    },
+    {
+      "day": "Saturday",
+      "total": 229,
+      "rate": 0.245
+    },
+    {
+      "day": "Sunday",
+      "total": 215,
+      "rate": 0.214
+    }
+  ],
+  "surface": [
+    {
+      "surface": "Snow (packed)",
+      "rate": 0.4,
+      "count": 5
+    },
+    {
+      "surface": "Dry",
+      "rate": 0.235,
+      "count": 1346
+    },
+    {
+      "surface": "Icy",
+      "rate": 0.221,
+      "count": 145
+    },
+    {
+      "surface": "Wet",
+      "rate": 0.209,
+      "count": 316
+    },
+    {
+      "surface": "Snow (fresh)",
+      "rate": 0.143,
+      "count": 98
+    },
+    {
+      "surface": "Snow (wet)",
+      "rate": 0.138,
+      "count": 109
+    }
+  ]
+}
