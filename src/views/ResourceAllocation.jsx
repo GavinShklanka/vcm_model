@@ -47,6 +47,7 @@ const riskLabel = (r) => {
 };
 
 // ── Domain stories — 4 steps per domain ────────────────────────────────────────
+// Keys MUST match RESOURCE_ALLOCATION[].domain names exactly
 const DOMAIN_STORIES = {
   'EMS Pre-Positioning': [
     { step: 1, label: 'The Finding',  icon: '📊',
@@ -62,49 +63,7 @@ const DOMAIN_STORIES = {
       content: 'Reduction in average EMS response time to severe rural events from ~14 min to ~9 min during the highest-risk daily window. No additional units required — just pre-positioning.',
       stat: '~5 min', statLabel: 'Estimated response reduction' },
   ],
-  'Corridor Monitoring': [
-    { step: 1, label: 'The Finding',  icon: '📊',
-      content: 'Hwy 102 curve segments north of Halifax and the Bedford corridor show the densest concentration of high-severity events in the spatial grid analysis.',
-      stat: '29.9%', statLabel: 'Curve crash severity' },
-    { step: 2, label: 'The Evidence', icon: '🔍',
-      content: 'Rollover (58.5%) and right-angle (47.4%) collisions dominate severity at intersection and curve nodes. These locations are fixed — the geometry does not change. Real-time sensors can flag speed anomalies.',
-      stat: '58.5%', statLabel: 'Rollover severity rate' },
-    { step: 3, label: 'The Action',   icon: '📡',
-      content: 'Install radar speed-feedback signs at 4 identified curve nodes on Hwy 102 (km 15, 22, 31, 38). Wire to a 511 API endpoint for real-time flagging when 85th-percentile speed exceeds posted limit by >15%.',
-      stat: '4 nodes', statLabel: 'Priority installation sites' },
-    { step: 4, label: 'The Outcome',  icon: '✅',
-      content: 'NS DOT pilots on comparable corridors showed 11-16% speed reduction at monitored sites. Applied to 29.9% baseline severity, even a 10% speed reduction delivers meaningful severity probability decrease.',
-      stat: '~11–16%', statLabel: 'Speed reduction in comparable pilots' },
-  ],
-  'Seasonal Staffing': [
-    { step: 1, label: 'The Finding',  icon: '📊',
-      content: 'The single most counter-intuitive finding in the dataset: May–September severity (25–29%) consistently exceeds November–March (14–22%). Summer is the high-severity season.',
-      stat: '29.3%', statLabel: 'September peak severity rate' },
-    { step: 2, label: 'The Evidence', icon: '🔍',
-      content: 'The mechanism is behavioral: drivers adapt defensively to obvious winter hazards (visible ice, heavy snow). Summer\'s clear conditions at highway speeds create false safety — complacency elevates severity.',
-      stat: '7.4 pts', statLabel: 'Sep vs Dec severity gap' },
-    { step: 3, label: 'The Action',   icon: '📅',
-      content: 'Shift RCMP Highway Patrol\'s peak-resource deployment window from December-February to May-September. Specifically: increase dusk patrol density on Hwy 102/103/104 during summer months.',
-      stat: 'May–Sep', statLabel: 'New peak deployment window' },
-    { step: 4, label: 'The Outcome',  icon: '✅',
-      content: 'No budget increase required — a shift of existing seasonal deployment patterns. Expected deterrence effect on high-speed distraction events, which comprise the majority of summer severe collisions.',
-      stat: '$0 new', statLabel: 'Additional budget required' },
-  ],
-  'Weather-Triggered Readiness': [
-    { step: 1, label: 'The Finding',  icon: '📊',
-      content: 'Weather features (temperature, wind, fog) are the top-ranked XGBoost predictors with importance scores of 0.95 and 0.82. Environment Canada issues forecasts with 6–24hr lead time — enough to act.',
-      stat: '0.95', statLabel: 'Temperature predictor importance' },
-    { step: 2, label: 'The Evidence', icon: '🔍',
-      content: 'Fog and black-ice windows are predictable from forecast data. The model\'s weather severity rank feature (0–7 hierarchy) captures these combinations. Pre-emptive alerts can be triggered before the conditions materialise.',
-      stat: '6–24hr', statLabel: 'Environment Canada forecast lead' },
-    { step: 3, label: 'The Action',   icon: '🌤️',
-      content: 'Build an automated pipeline: ECCC API forecast → weather severity rank calculator → if rank ≥ 5 on flagged corridors, trigger NS 511 advisory + EMS readiness alert. Runs nightly at 21:00.',
-      stat: 'Rank ≥5', statLabel: 'Trigger threshold' },
-    { step: 4, label: 'The Outcome',  icon: '✅',
-      content: 'Estimated 15-20% improvement in EMS readiness during the 8–12% of days that meet the high-severity weather threshold. Alert fatigue avoided by using the model\'s severity rank (not raw weather flags).',
-      stat: '8–12%', statLabel: 'Days meeting trigger threshold/year' },
-  ],
-  'Engineering Interventions': [
+  'Infrastructure Targeting': [
     { step: 1, label: 'The Finding',  icon: '📊',
       content: 'Curved + level roads (28.1%) and curved + graded roads (25.0%) both exceed straight equivalents by 3-5 percentage points. The geometry is the hazard — and geometry can be engineered.',
       stat: '28.1%', statLabel: 'Curved+level severity rate' },
@@ -118,7 +77,21 @@ const DOMAIN_STORIES = {
       content: 'Based on FHWA benchmarks and NS corridor geometry, estimated 20-35% reduction in run-off-road severe events on treated segments. One-time capital cost with 15+ year effective life.',
       stat: '20–35%', statLabel: 'Estimated severe event reduction' },
   ],
-  'Public Messaging': [
+  'Traffic Enforcement': [
+    { step: 1, label: 'The Finding',  icon: '📊',
+      content: 'The single most counter-intuitive finding in the dataset: May–September severity (25–29%) consistently exceeds November–March (14–22%). Summer is the high-severity season.',
+      stat: '29.3%', statLabel: 'September peak severity rate' },
+    { step: 2, label: 'The Evidence', icon: '🔍',
+      content: 'The mechanism is behavioral: drivers adapt defensively to obvious winter hazards (visible ice, heavy snow). Summer\'s clear conditions at highway speeds create false safety — complacency elevates severity.',
+      stat: '7.4 pts', statLabel: 'Sep vs Dec severity gap' },
+    { step: 3, label: 'The Action',   icon: '📅',
+      content: 'Shift RCMP Highway Patrol\'s peak-resource deployment window from December-February to May-September. Specifically: increase dusk patrol density on Hwy 102/103/104 during summer months.',
+      stat: 'May–Sep', statLabel: 'New peak deployment window' },
+    { step: 4, label: 'The Outcome',  icon: '✅',
+      content: 'No budget increase required — a shift of existing seasonal deployment patterns. Expected deterrence effect on high-speed distraction events, which comprise the majority of summer severe collisions.',
+      stat: '$0 new', statLabel: 'Additional budget required' },
+  ],
+  'Public Education': [
     { step: 1, label: 'The Finding',  icon: '📊',
       content: 'Distraction (33.1% severity) outranks impairment (32.1%) — and distraction is 3× more prevalent. The Distracted Commuter archetype (7.7% of crashes) is the deadliest segment.',
       stat: '3×', statLabel: 'Distraction prevalence vs impairment' },
@@ -132,7 +105,35 @@ const DOMAIN_STORIES = {
       content: 'Primary goal: normalize the summer-is-dangerous message against entrenched winter-focused public perception. Secondary: reduce distraction prevalence in the 7.7% highest-severity archetype.',
       stat: 'May spike', statLabel: 'Target intervention window' },
   ],
-  'Data Governance': [
+  'Insurance Pricing': [
+    { step: 1, label: 'The Finding',  icon: '📊',
+      content: 'Severity risk is not uniformly distributed across corridors. The model identifies specific corridor-geometry-weather combinations where the severe collision rate exceeds 28% — nearly 30% above baseline.',
+      stat: '28%+', statLabel: 'Severe rate on worst corridors' },
+    { step: 2, label: 'The Evidence', icon: '🔍',
+      content: 'The severity grid analysis reveals that 12 of 91 grid cells are rated "critical" — these cells contain a disproportionate share of severe outcomes. Corridor-level risk banding is empirically supportable.',
+      stat: '12/91', statLabel: 'Critical-tier grid cells' },
+    { step: 3, label: 'The Action',   icon: '💰',
+      content: 'Develop corridor-specific risk bands for auto insurance pricing. Premium adjustments would reflect the empirically observed severity differential between critical-tier and baseline-tier grid zones.',
+      stat: '4 tiers', statLabel: 'Risk-corridor premium bands' },
+    { step: 4, label: 'The Outcome',  icon: '✅',
+      content: 'Long-horizon initiative (3+ years). Requires regulatory engagement and actuarial review. But the V2 model provides the empirical foundation: corridor-level severity rates derived from 2,068 observed collisions.',
+      stat: '3+ yrs', statLabel: 'Implementation horizon' },
+  ],
+  'Winter Maintenance': [
+    { step: 1, label: 'The Finding',  icon: '📊',
+      content: 'Weather features (temperature, wind, fog) are the top-ranked XGBoost predictors with importance scores of 0.95 and 0.82. Environment Canada issues forecasts with 6–24hr lead time — enough to act.',
+      stat: '0.95', statLabel: 'Temperature predictor importance' },
+    { step: 2, label: 'The Evidence', icon: '🔍',
+      content: 'Fog and black-ice windows are predictable from forecast data. The model\'s weather severity rank feature (0–7 hierarchy) captures these combinations. Pre-emptive treatment can be triggered before conditions materialise.',
+      stat: '6–24hr', statLabel: 'Environment Canada forecast lead' },
+    { step: 3, label: 'The Action',   icon: '🌤️',
+      content: 'Build an automated pipeline: ECCC API forecast → weather severity rank calculator → if rank ≥ 5 on flagged corridors, trigger pre-treatment dispatch + NS 511 advisory. Focus on curve segments identified in the severity grid.',
+      stat: 'Rank ≥5', statLabel: 'Trigger threshold' },
+    { step: 4, label: 'The Outcome',  icon: '✅',
+      content: 'Estimated 15-20% improvement in surface readiness during the 8–12% of days that meet the high-severity weather threshold. Pre-treatment of curve segments before freeze events directly targets the highest-risk geometry.',
+      stat: '8–12%', statLabel: 'Days meeting trigger threshold/year' },
+  ],
+  'Data + Monitoring': [
     { step: 1, label: 'The Finding',  icon: '📊',
       content: 'The model was trained on Jan 2024 – Jan 2026 NS GeoJSON data. Seasonal drift and infrastructure changes mean that without retraining, accuracy degrades over 12+ month windows.',
       stat: '2,068', statLabel: 'Records in current training set' },
@@ -283,7 +284,7 @@ const ResourceAllocation = () => {
                 <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.4rem' }}>{ctrl.label}</div>
                 <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
                   {ctrl.options.map(opt => (
-                    <button key={opt.value} onClick={() => { setConditions(c => ({ ...c, [key]: opt.value })); setActivePreset(null); }} style={{
+                    <button key={opt.value} onClick={() => setConditions(c => ({ ...c, [key]: opt.value }))} style={{
                       padding: '4px 10px', borderRadius: '20px', border: '1px solid var(--border-light)', fontSize: '0.8rem',
                       background: conditions[key] === opt.value ? 'var(--accent-blue)' : 'var(--bg-fog)',
                       color: conditions[key] === opt.value ? 'white' : 'var(--text-main)',
@@ -321,19 +322,22 @@ const ResourceAllocation = () => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          {RESOURCE_ALLOCATION.map((item, idx) => (
+          {RESOURCE_ALLOCATION.map((item, idx) => {
+            const domainIcons = { 'EMS Pre-Positioning': '🚑', 'Infrastructure Targeting': '🏗️', 'Traffic Enforcement': '🚔', 'Public Education': '📢', 'Insurance Pricing': '💰', 'Winter Maintenance': '🌤️', 'Data + Monitoring': '📊' };
+            const priorityColors = { Critical: 'var(--accent-red)', High: 'var(--accent-amber)', Medium: 'var(--accent-blue)', Low: 'var(--text-muted)' };
+            return (
             <div key={idx} className="card" style={{ padding: 0, overflow: 'hidden', border: openStory === item.domain ? '1px solid var(--accent-blue)' : '1px solid var(--border-light)', transition: 'border 0.15s ease' }}>
               {/* Row */}
               <div style={{ padding: '1rem 1.25rem', display: 'grid', gridTemplateColumns: '2rem 1fr 1.6fr 1fr auto', gap: '1rem', alignItems: 'center' }}>
-                <div style={{ fontSize: '1.35rem' }}>{item.icon}</div>
+                <div style={{ fontSize: '1.35rem' }}>{domainIcons[item.domain] || '📋'}</div>
                 <div>
                   <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--text-heading)' }}>{item.domain}</div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--accent-blue)', fontWeight: 500, marginTop: '2px' }}>Finding {item.findingRef}</div>
+                  <div style={{ fontSize: '0.72rem', color: priorityColors[item.priority] || 'var(--accent-blue)', fontWeight: 500, marginTop: '2px' }}>{item.priority} Priority · {item.horizon}</div>
                 </div>
-                <div style={{ fontSize: '0.83rem', color: 'var(--text-main)', lineHeight: 1.45 }}>{item.action}</div>
+                <div style={{ fontSize: '0.83rem', color: 'var(--text-main)', lineHeight: 1.45 }}>{item.lever}</div>
                 <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                  <div style={{ fontWeight: 500, color: 'var(--text-heading)', marginBottom: '1px' }}>{item.lead}</div>
-                  <div>{item.season}</div>
+                  <div style={{ fontWeight: 500, color: 'var(--text-heading)', marginBottom: '1px' }}>Impact: {item.impact}</div>
+                  <div>Feasibility: {item.feasibility}</div>
                 </div>
                 <button
                   onClick={() => setOpenStory(openStory === item.domain ? null : item.domain)}
@@ -356,7 +360,8 @@ const ResourceAllocation = () => {
                 </div>
               )}
             </div>
-          ))}
+          );
+          })}
         </div>
       </section>
     </div>
