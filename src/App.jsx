@@ -3,20 +3,23 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import Sidebar from './components/layout/Sidebar';
 import Overview from './views/Overview';
 import Performance from './views/Performance';
+import IntelligenceArchitecture from './views/IntelligenceArchitecture';
 import RiskZones from './views/RiskZones';
 import Archetypes from './views/Archetypes';
 import Policy from './views/Policy';
 import Integrity from './views/Integrity';
 import MapEvidence from './views/MapEvidence';
 import ResourceAllocation from './views/ResourceAllocation';
+import Presentation from './views/Presentation';
 
 // Ordered presentation sequence — must match Sidebar order
 const SLIDE_ROUTES = [
   { path: '/',                    label: 'Overview' },
-  { path: '/performance',         label: 'Model Performance' },
+  { path: '/performance',         label: 'Scoring Architecture' },
+  { path: '/features',            label: 'Intelligence Architecture' },
   { path: '/risk-zones',          label: 'Risk Zones' },
   { path: '/map',                 label: 'Geographic Evidence' },
-  { path: '/archetypes',          label: 'Behavioral Profiles' },
+  { path: '/archetypes',          label: 'Intervention Profiles' },
   { path: '/resource-allocation', label: 'Resource Allocation' },
   { path: '/policy',              label: 'Policy Signals' },
   { path: '/integrity',           label: 'Integrity + Limits' },
@@ -54,14 +57,14 @@ function PresentationNav({ onExit }) {
         onClick={() => goTo(idx - 1)}
         disabled={idx === 0}
         style={{ ...btnBase,
-          background: idx === 0 ? 'var(--bg-fog)' : 'var(--bg-fog)',
+          background: 'var(--bg-fog)',
           color: idx === 0 ? 'var(--border-focus)' : 'var(--text-heading)',
           cursor: idx === 0 ? 'default' : 'pointer'
         }}
       >←</button>
 
       {/* Slide counter + label */}
-      <div style={{ padding: '0 10px', textAlign: 'center', minWidth: '130px' }}>
+      <div style={{ padding: '0 10px', textAlign: 'center', minWidth: '160px' }}>
         <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
           {idx + 1} of {SLIDE_ROUTES.length}
         </div>
@@ -75,7 +78,7 @@ function PresentationNav({ onExit }) {
         onClick={() => goTo(idx + 1)}
         disabled={idx === SLIDE_ROUTES.length - 1}
         style={{ ...btnBase,
-          background: 'var(--accent-blue)',
+          background: '#1A7FA0',
           color: idx === SLIDE_ROUTES.length - 1 ? 'rgba(255,255,255,0.4)' : 'white',
           cursor: idx === SLIDE_ROUTES.length - 1 ? 'default' : 'pointer'
         }}
@@ -102,12 +105,14 @@ function App() {
         <Routes>
           <Route path="/"                    element={<Overview />} />
           <Route path="/performance"         element={<Performance />} />
+          <Route path="/features"            element={<IntelligenceArchitecture />} />
           <Route path="/risk-zones"          element={<RiskZones />} />
           <Route path="/map"                 element={<MapEvidence />} />
           <Route path="/archetypes"          element={<Archetypes />} />
           <Route path="/resource-allocation" element={<ResourceAllocation />} />
           <Route path="/policy"              element={<Policy />} />
           <Route path="/integrity"           element={<Integrity />} />
+          <Route path="/presentation"        element={<Presentation />} />
           <Route path="*"                    element={<Navigate to="/" replace />} />
         </Routes>
 
@@ -118,10 +123,10 @@ function App() {
               onClick={() => setPresentationMode(true)}
               style={{
                 position: 'fixed', bottom: '20px', right: '20px',
-                padding: '8px 18px', background: 'var(--accent-blue)',
+                padding: '8px 18px', background: '#1A7FA0',
                 color: 'white', border: 'none', borderRadius: '6px',
                 cursor: 'pointer', fontWeight: 600, fontSize: '0.88rem',
-                boxShadow: '0 2px 8px rgba(43,108,176,0.3)', zIndex: 100
+                boxShadow: '0 2px 8px rgba(26,127,160,0.3)', zIndex: 100
               }}
             >
               Present

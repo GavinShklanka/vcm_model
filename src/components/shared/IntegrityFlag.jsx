@@ -4,7 +4,7 @@ import { ShieldCheck, AlertCircle } from 'lucide-react';
 export const IntegrityFlag = ({ message }) => (
   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', fontWeight: 500, color: 'var(--accent-blue)', background: 'rgba(43,108,176,0.08)', border: '1px solid rgba(43,108,176,0.2)', padding: '4px 10px', borderRadius: '20px' }}>
     <ShieldCheck size={13} />
-    {message || 'Empirical V2 · XGBoost 0.642 AUC · Real NS Data'}
+    {message || 'Empirical V2 · Ensemble 0.6576 AUC · Real NS Data'}
   </div>
 );
 

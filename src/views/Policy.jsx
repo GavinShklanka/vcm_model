@@ -47,7 +47,7 @@ const policyActions = [
     tier1: "Quarterly Model Retraining Pipeline",
     riskSignal: "Model Drift / Data Freshness", findingRef: "ALL",
     family: "Data Governance", lead: "NS Digital Service / MBAN Program",
-    rationale: "Establish quarterly ingestion of new NS GeoJSON collision records to retrain the XGBoost model. Seasonal drift (new months shift severity distribution) degrades model accuracy over 12+ month windows.",
+    rationale: "Establish quarterly ingestion of new NS GeoJSON collision records to retrain the ensemble scoring system. Seasonal drift (new months shift severity distribution) degrades model accuracy over 12+ month windows.",
     caution: "Requires maintaining the empirical V2 pipeline and environment. Document all retraining runs."
   }
 ];
